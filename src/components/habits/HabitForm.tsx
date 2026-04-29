@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Habit } from '@/types/habit';
+import { Habit, HabitFrequency } from '@/types/habit';
 import { validateHabitName } from '@/lib/validators';
 import { getSession, getHabits, saveHabits } from '@/lib/storage';
 import { motion } from 'motion/react';
@@ -16,7 +16,7 @@ interface HabitFormProps {
 export default function HabitForm({ onSuccess, onCancel, initialData }: HabitFormProps) {
   const [name, setName] = useState(initialData?.name || '');
   const [description, setDescription] = useState(initialData?.description || '');
-  const [frequency, setFrequency] = useState<'daily'>(initialData?.frequency || 'daily');
+  const [frequency, setFrequency] = useState<HabitFrequency>(initialData?.frequency || 'daily');
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -111,11 +111,14 @@ export default function HabitForm({ onSuccess, onCancel, initialData }: HabitFor
             <select
               id="habit-frequency"
               value={frequency}
-              onChange={(e) => setFrequency(e.target.value as 'daily')}
+              onChange={(e) => setFrequency(e.target.value as HabitFrequency)}
               className="w-full bg-slate-50 dark:bg-slate-900/50 border-2 border-transparent px-5 py-4 rounded-2xl outline-none appearance-none cursor-pointer text-slate-900 dark:text-slate-100 font-medium"
               data-testid="habit-frequency-select"
             >
               <option value="daily">Daily</option>
+              <option value="bi-weekly">Bi-weekly</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
             </select>
             <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
               <Check size={18} />
