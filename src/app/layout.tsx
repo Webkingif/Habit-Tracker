@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -8,10 +9,21 @@ export const metadata = {
   title: 'Habit Tracker',
   description: 'Simple and effective habit tracking.',
   manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'HabitFlow',
+  },
   icons: {
     icon: '/icons/icon-192.png',
     apple: '/icons/icon-192.png',
   },
+};
+
+export const viewport = {
+  themeColor: '#2563eb',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -21,28 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="theme-color" content="#2563eb" />
-      </head>
       <body className={inter.className}>
         <ThemeProvider>
           {children}
+          <ServiceWorkerRegistration />
         </ThemeProvider>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                  }, function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
-                  });
-                });
-              }
-            `,
-          }}
-        />
       </body>
     </html>
   );

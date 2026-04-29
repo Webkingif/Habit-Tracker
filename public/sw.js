@@ -16,11 +16,15 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request).catch(() => {
-        // Fallback for offline if something isn't in cache
-        return caches.match('/');
+        if (event.request.mode === 'navigate') {
+          return caches.match('/');
+        }
+        return Promise.reject('offline');
       });
     })
   );
