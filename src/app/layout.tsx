@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import InstallPrompt from '@/components/InstallPrompt';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -14,9 +15,17 @@ export const metadata = {
     statusBarStyle: 'default',
     title: 'HabitFlow',
   },
+  formatDetection: {
+    telephone: false,
+  },
   icons: {
-    icon: '/icons/icon-192.png',
-    apple: '/icons/icon-192.png',
+    icon: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
   },
 };
 
@@ -37,6 +46,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <ServiceWorkerRegistration />
+          <InstallPrompt />
         </ThemeProvider>
       </body>
     </html>

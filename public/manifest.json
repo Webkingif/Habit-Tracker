@@ -4,11 +4,21 @@
   "description": "Simple and effective habit tracking.",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "minimal-ui"],
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
   "scope": "/",
   "id": "/",
   "categories": ["productivity", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "New Habit",
+      "short_name": "New",
+      "url": "/dashboard?action=new",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "/icons/icon-192.png",
